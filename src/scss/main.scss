@@ -1,0 +1,30 @@
+@import 'core/variables';
+@import 'core/reset';
+@import 'components/code';
+@import 'components/links';
+@import 'layout/page';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'pages/index';
+
+.search{
+  color: rgb(60, 209, 209);
+  margin: 20px 0px;
+}
+
+.input{
+  width: 280px;
+  height: 30px;
+  border: 2px solid rgb(60, 209, 209);
+
+}
+
+.button {
+  background-color: rgb(60, 209, 209);
+  color: white;
+  width: 60px;
+  height: 23px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+}
