@@ -29,7 +29,7 @@ function buildCoctails() {
   const drinkslocal = JSON.parse(localStorage.getItem('drinkslocal'));
   let html = '';
   html = `<h3 class="licoctails">Lista de cocteles buscados</h3>`;
-  // html = `<div>`;
+  // html += `<div>`;
   for (const drink of drinkslocal) {
     const nameDrink = drink.strDrink;
     const imageDrink = drink.strDrinkThumb;
@@ -45,7 +45,7 @@ function buildCoctails() {
     html += `</div>`;
     html += `</li>`;
   }
-  // html = `</div>`;
+  // html += `</div>`;
   cocktailssearch.innerHTML = html;
   handleClickCocktails();
 }
@@ -57,7 +57,7 @@ function handleClickCocktails() {
     item.addEventListener('click', addFavorite);
   }
 }
-let favorites = [];
+// let favorites = [];
 function addFavorite(event) {
   const drinkslocal = JSON.parse(localStorage.getItem('drinkslocal'));
   const favoritesHtml = document.querySelector('.favorites');
@@ -65,9 +65,19 @@ function addFavorite(event) {
   const favoriteSelect = drinkslocal.find(
     (x) => x.idDrink === idCocktailsSelect
   );
-  favorites.push(favoriteSelect);
+
+  let drinkslocalFav = JSON.parse(localStorage.getItem('drinkslocalFav'));
+  // console.log(drinkslocalFav);
+
+  // console.log(favoriteSelect);
+  if (drinkslocalFav === null) {
+    drinkslocalFav = [];
+  }
+
+  drinkslocalFav.push(favoriteSelect);
+  // console.log(drinkslocalFav);
   // localstorage
-  localStorage.setItem('drinkslocalFav', JSON.stringify(favorites));
+  localStorage.setItem('drinkslocalFav', JSON.stringify(drinkslocalFav));
 
   let favHtml = '';
 
@@ -88,6 +98,7 @@ function addFavorite(event) {
 
 function colorSelecFav(idDrink) {
   const cocktailsFav = document.getElementById(idDrink);
+  console.log(cocktailsFav);
   cocktailsFav.classList.add('selecfavo');
 }
 
@@ -101,9 +112,8 @@ function handleClickDelete() {
 function deleteFavorite(event) {
   const idFavorite = event.currentTarget.id;
   // console.log(idFavorite);
-
   let idCoctel = idFavorite.split('-')[1];
-  console.log(idCoctel);
+  // console.log(idCoctel);
   const drinkslocalFav = JSON.parse(localStorage.getItem('drinkslocalFav'));
   const indexFavorite = drinkslocalFav.findIndex((x) => {
     // console.log(typeof x.idDrink, typeof idCoctel);
@@ -116,6 +126,7 @@ function deleteFavorite(event) {
   favoritesHtml.innerHTML = '';
   let favHtml = '';
   for (const drinks of drinkslocalFav) {
+    // console.log(drinks);
     const nameDrink = drinks.strDrink;
     const imageDrink = drinks.strDrinkThumb;
     const idDrink = drinks.idDrink;
@@ -126,9 +137,14 @@ function deleteFavorite(event) {
     favHtml += `</div>`;
     favHtml += `</li>`;
 
-    favoritesHtml.innerHTML += favHtml;
-    colorSelecFav(idDrink);
+    favoritesHtml.innerHTML = favHtml;
+    // colorSelecFav(idDrink);
   }
-
   handleClickDelete();
+  deleteBorderSearch(idCoctel);
+}
+
+function deleteBorderSearch(idDrink) {
+  const cocktailsFav = document.getElementById(idDrink);
+  cocktailsFav.classList.remove('selecfavo');
 }
