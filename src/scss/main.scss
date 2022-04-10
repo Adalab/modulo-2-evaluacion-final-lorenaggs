@@ -7,6 +7,9 @@
 @import 'layout/footer';
 @import 'pages/index';
 
+.main{
+background-color: rgba(212, 182, 182, 0.559);
+}
 .search{
   color: rgb(60, 209, 209);
   margin: 20px 0px;
@@ -16,7 +19,7 @@
   width: 280px;
   height: 30px;
   border: 2px solid rgb(60, 209, 209);
-
+  background-color: rgba(212, 182, 182, 0.559);
 }
 
 .button {
@@ -27,4 +30,48 @@
   border: none;
   border-radius: 5px;
   margin-left: 10px;
+}
+.cocktailsfavorites{
+  display: flex;
+  flex-direction: row;
+  // align-items: center;
+  // justify-content: center;
+}
+
+.listcocktails{
+  display: flex;
+  background-color: rgba(212, 182, 182, 0.559);
+}
+
+.licoctails{
+  background-color: white;
+}
+
+.listfavorites{
+background-color: rgb(26, 25, 25);
+color: white;
+}
+// .favorites{
+//   border: 1px solid black;
+//   width: 200px;
+// }
+
+.selecdelete {
+  align-content: center;
+  color: white;
+  background-color: rgb(43, 40, 40);
+  border-radius: 90%;
+  margin-block-end: auto;
+}
+
+.selecfavo {
+  border: solid 1px rgb(60, 209, 209);
+  color: rgb(60, 209, 209);;
+}
+
+.cocktails{
+display: flex;
+flex-direction: column-reverse;
+align-items: center;
+// height: 120px;
 }
