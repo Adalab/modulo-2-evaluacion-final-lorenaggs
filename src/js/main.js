@@ -7,7 +7,6 @@ const favoritesHtml = document.querySelector('.favorites');
 
 function handleClickSearch(event) {
   event.preventDefault();
-  clearSearch();
   const input = document.querySelector('.input').value;
   fetch(`https://thecocktaildb.com/api/json/v1/1/search.php?s=${input}`)
     .then(function (response) {
