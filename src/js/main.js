@@ -2,17 +2,12 @@
 
 const buttonSearch = document.querySelector('.button-search');
 const cocktailssearch = document.querySelector('.cocktailssearch');
-// const listcocktails = document.querySelector('.listcocktails');
+const buttonReset = document.querySelector('.button-reset');
+const favoritesHtml = document.querySelector('.favorites');
 
-let data = [];
-
-// function preventDefault(event) {
-//   event.preventDefault
-
-// }
-
-function handleClick() {
-  deleteAllFavorites();
+function handleClickSearch(event) {
+  event.preventDefault();
+  clearSearch();
   const input = document.querySelector('.input').value;
   fetch(`https://thecocktaildb.com/api/json/v1/1/search.php?s=${input}`)
     .then(function (response) {
@@ -29,13 +24,12 @@ function handleClick() {
     });
 }
 
-buttonSearch.addEventListener('click', handleClick);
+buttonSearch.addEventListener('click', handleClickSearch);
 
 function buildCoctails() {
   const drinkslocal = JSON.parse(localStorage.getItem('drinkslocal'));
   let html = '';
-  html = `<h3 class="licoctails">Lista de cocteles buscados</h3>`;
-  // html += `<div>`;
+
   for (const drink of drinkslocal) {
     const nameDrink = drink.strDrink;
     const imageDrink = drink.strDrinkThumb;
@@ -52,39 +46,35 @@ function buildCoctails() {
     html += `</div>`;
     html += `</li>`;
   }
-  // html += `</div>`;
+
   cocktailssearch.innerHTML = html;
   handleClickCocktails();
 }
 
-// let favorites = [];
 function handleClickCocktails() {
   const cocktails = document.querySelectorAll('.cocktails');
   for (const item of cocktails) {
     item.addEventListener('click', addFavorite);
   }
 }
-// let favorites = [];
+
 function addFavorite(event) {
+  // let favHtml = 'Lista de cocteles favoritos';
   const drinkslocal = JSON.parse(localStorage.getItem('drinkslocal'));
   const favoritesHtml = document.querySelector('.favorites');
   const idCocktailsSelect = event.currentTarget.id;
-  console.log(idCocktailsSelect);
+
   const favoriteSelect = drinkslocal.find(
     (x) => x.idDrink === idCocktailsSelect
   );
 
   let drinkslocalFav = JSON.parse(localStorage.getItem('drinkslocalFav'));
-  // console.log(drinkslocalFav);
 
-  // console.log(favoriteSelect);
   if (drinkslocalFav === null) {
     drinkslocalFav = [];
   }
 
   drinkslocalFav.push(favoriteSelect);
-  // console.log(drinkslocalFav);
-  // localstorage
   localStorage.setItem('drinkslocalFav', JSON.stringify(drinkslocalFav));
 
   let favHtml = '';
@@ -106,7 +96,6 @@ function addFavorite(event) {
 
 function colorSelecFav(idDrink) {
   const cocktailsFav = document.getElementById(idDrink);
-  console.log(cocktailsFav);
   cocktailsFav.classList.add('selecfavo');
 }
 
@@ -119,12 +108,11 @@ function handleClickDelete() {
 
 function deleteFavorite(event) {
   const idFavorite = event.currentTarget.id;
-  // console.log(idFavorite);
+
   let idCoctel = idFavorite.split('-')[1];
-  // console.log(idCoctel);
+
   const drinkslocalFav = JSON.parse(localStorage.getItem('drinkslocalFav'));
   const indexFavorite = drinkslocalFav.findIndex((x) => {
-    // console.log(typeof x.idDrink, typeof idCoctel);
     return x.idDrink === idCoctel;
   });
   drinkslocalFav.splice(indexFavorite, 1);
@@ -132,9 +120,9 @@ function deleteFavorite(event) {
   localStorage.setItem('drinkslocalFav', JSON.stringify(drinkslocalFav));
   const favoritesHtml = document.querySelector('.favorites');
   favoritesHtml.innerHTML = '';
+
   let favHtml = '';
   for (const drinks of drinkslocalFav) {
-    // console.log(drinks);
     const nameDrink = drinks.strDrink;
     const imageDrink = drinks.strDrinkThumb;
     const idDrink = drinks.idDrink;
@@ -146,11 +134,9 @@ function deleteFavorite(event) {
     favHtml += `</li>`;
 
     favoritesHtml.innerHTML = favHtml;
-    // colorSelecFav(idDrink);
   }
   handleClickDelete();
   deleteBorderSearch(idCoctel);
-  deleteAllFavorites();
 }
 
 function deleteBorderSearch(idDrink) {
@@ -158,14 +144,12 @@ function deleteBorderSearch(idDrink) {
   cocktailsFav.classList.remove('selecfavo');
 }
 
-const buttonReset = document.querySelector('.button-reset');
-const favoritesHtml = document.querySelector('.favorites');
-
-function deleteAllFavorites() {
+function clearSearch() {
   localStorage.removeItem('drinkslocal');
   localStorage.removeItem('drinkslocalFav');
   favoritesHtml.innerHTML = '';
   cocktailssearch.innerHTML = '';
 }
 
-buttonReset.addEventListener('click', deleteAllFavorites);
+buttonReset.addEventListener('click', clearSearch);
+clearSearch();
