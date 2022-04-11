@@ -6,7 +6,13 @@ const cocktailssearch = document.querySelector('.cocktailssearch');
 
 let data = [];
 
+// function preventDefault(event) {
+//   event.preventDefault
+
+// }
+
 function handleClick() {
+  deleteAllFavorites();
   const input = document.querySelector('.input').value;
   fetch(`https://thecocktaildb.com/api/json/v1/1/search.php?s=${input}`)
     .then(function (response) {
@@ -42,6 +48,7 @@ function buildCoctails() {
     } else {
       html += `<img class="image" src="${imageDrink}" width="50">`;
     }
+
     html += `</div>`;
     html += `</li>`;
   }
@@ -62,6 +69,7 @@ function addFavorite(event) {
   const drinkslocal = JSON.parse(localStorage.getItem('drinkslocal'));
   const favoritesHtml = document.querySelector('.favorites');
   const idCocktailsSelect = event.currentTarget.id;
+  console.log(idCocktailsSelect);
   const favoriteSelect = drinkslocal.find(
     (x) => x.idDrink === idCocktailsSelect
   );
@@ -142,9 +150,22 @@ function deleteFavorite(event) {
   }
   handleClickDelete();
   deleteBorderSearch(idCoctel);
+  deleteAllFavorites();
 }
 
 function deleteBorderSearch(idDrink) {
   const cocktailsFav = document.getElementById(idDrink);
   cocktailsFav.classList.remove('selecfavo');
 }
+
+const buttonReset = document.querySelector('.button-reset');
+const favoritesHtml = document.querySelector('.favorites');
+
+function deleteAllFavorites() {
+  localStorage.removeItem('drinkslocal');
+  localStorage.removeItem('drinkslocalFav');
+  favoritesHtml.innerHTML = '';
+  cocktailssearch.innerHTML = '';
+}
+
+buttonReset.addEventListener('click', deleteAllFavorites);
