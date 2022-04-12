@@ -33,15 +33,16 @@ function buildCoctails() {
     const nameDrink = drink.strDrink;
     const imageDrink = drink.strDrinkThumb;
     const idDrink = drink.idDrink;
+    const strCategory = drink.strCategory;
 
     html += `<li class="listsearch">`;
     html += `<div class="cocktails" id="${idDrink}"> ${nameDrink}`;
+    html += `<p class='strCategory'>${strCategory}</p>`;
     if (imageDrink === '') {
       html += `<img class="image" src="https://via.placeholder.com/210x295/ffffff/666666/?text=C%C3%B3ctel" width="50">`;
     } else {
       html += `<img class="image" src="${imageDrink}" width="50">`;
     }
-
     html += `</div>`;
     html += `</li>`;
   }
@@ -152,3 +153,15 @@ function clearSearch() {
 
 buttonReset.addEventListener('click', clearSearch);
 clearSearch();
+
+const buttonLog = document.querySelector('.button-log');
+
+function addCampFavorite() {
+  const drinkslocalFav = JSON.parse(localStorage.getItem('drinkslocalFav'));
+  for (const item of drinkslocalFav) {
+    const temsFav = item.strDrink;
+    console.log(temsFav);
+  }
+}
+
+buttonLog.addEventListener('click', addCampFavorite);
